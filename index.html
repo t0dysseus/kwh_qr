@@ -11,71 +11,174 @@
     --green: #007a1a;
     --green-dark: #005c13;
     --lime: #98c739;
+    --lime-soft: #dcebb8;
     --tint: #f3f8e6;
     --ink: #17301c;
     --muted: #4d6350;
+    --amber: #f2b134;
   }
   * { box-sizing: border-box; }
   html { height: 100%; }
   body {
     margin: 0;
     min-height: 100%;
-    background: var(--tint);
+    background: linear-gradient(180deg, #eef6d9 0%, var(--tint) 220px, var(--tint) 100%);
     color: var(--ink);
     font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.5;
     display: flex;
     justify-content: center;
-    padding: 40px 20px;
+    padding: 40px 20px 56px;
   }
-  main { width: 100%; max-width: 460px; }
-  header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+  main { width: 100%; max-width: 520px; }
+
+  /* ---------- Kopf ---------- */
+  header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
   header img { width: 52px; height: 52px; border-radius: 50%; display: block; }
   h1 { font-size: 1.6rem; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  .intro { margin: 0 0 14px; }
+  .intro a { color: var(--green); font-weight: 600; text-underline-offset: 3px; }
+  .intro a:hover { color: var(--green-dark); }
+  .quick { list-style: none; margin: 0 0 26px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .quick li {
+    display: flex; align-items: center; gap: 8px;
+    background: #fff; border: 2px solid var(--lime-soft); border-radius: 999px;
+    padding: 5px 14px 5px 6px; font-size: 0.9rem; font-weight: 600;
+  }
+  .quick b {
+    width: 24px; height: 24px; border-radius: 50%; background: var(--green); color: #fff;
+    display: grid; place-items: center; font-size: 0.8rem;
+  }
+
+  /* ---------- Formular ---------- */
   label { display: block; font-weight: 600; margin-bottom: 6px; }
   .row { display: flex; gap: 10px; }
   input[type="text"] {
-    flex: 1;
-    min-width: 0;
-    font: inherit;
-    padding: 12px 14px;
-    border: 2px solid var(--lime);
-    border-radius: 10px;
-    background: #fff;
-    color: var(--ink);
+    flex: 1; min-width: 0; font: inherit; padding: 12px 14px;
+    border: 2px solid var(--lime); border-radius: 10px; background: #fff; color: var(--ink);
   }
   input[type="text"]::placeholder { color: #86978a; }
   button {
-    font: inherit;
-    font-weight: 600;
-    padding: 12px 20px;
-    border: 2px solid var(--green);
-    border-radius: 10px;
-    background: var(--green);
-    color: #fff;
-    cursor: pointer;
+    font: inherit; font-weight: 600; padding: 12px 20px;
+    border: 2px solid var(--green); border-radius: 10px;
+    background: var(--green); color: #fff; cursor: pointer;
   }
   button:hover { background: var(--green-dark); border-color: var(--green-dark); }
   button.secondary { background: #fff; color: var(--green); }
-  button.secondary:hover { background: #eaf5d2; border-color: var(--green); }
-  input:focus-visible, button:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  button.secondary:hover { background: #eaf5d2; border-color: var(--green); color: var(--green); }
+  input:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   .hint { color: var(--muted); font-size: 0.9rem; margin: 10px 0 0; }
   .error { color: #9b1c1c; font-weight: 600; margin: 12px 0 0; min-height: 1.5em; }
   #result { margin-top: 20px; text-align: center; }
   #result[hidden] { display: none; }
   canvas {
-    display: block;
-    width: 100%;
-    max-width: 380px;
-    height: auto;
-    margin: 0 auto 18px;
-    background: #fff;
-    border-radius: 12px;
-    border: 2px solid var(--lime);
+    display: block; width: 100%; max-width: 380px; height: auto; margin: 0 auto 18px;
+    background: #fff; border-radius: 12px; border: 2px solid var(--lime);
   }
-  @media (max-width: 420px) {
+
+  /* ---------- Gut zu wissen ---------- */
+  .wissen { margin-top: 48px; }
+  .wissen h2 { font-size: 1.25rem; font-weight: 600; margin: 0 0 4px; }
+  .wissen .sub { margin: 0 0 16px; color: var(--muted); }
+
+  .card {
+    background: #fff; border: 2px solid var(--lime-soft); border-radius: 16px; margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease, background .25s ease;
+  }
+  .card:hover { transform: translateY(-2px); border-color: var(--lime); box-shadow: 0 8px 22px rgba(0, 122, 26, .12); }
+  .card.open {
+    transform: none; border-color: var(--green);
+    box-shadow: 0 0 0 4px rgba(152, 199, 57, .28), 0 12px 30px rgba(0, 122, 26, .16);
+    background: linear-gradient(180deg, #fff 0%, #f8fcee 100%);
+  }
+  .card .card-head,
+  .card .card-head:hover {
+    width: 100%; display: flex; align-items: center; gap: 14px; text-align: left;
+    background: transparent; color: var(--ink); border: 0; border-radius: 0; padding: 16px;
+  }
+  .num {
+    flex: none; width: 42px; height: 42px; border-radius: 12px; background: var(--tint); color: var(--green);
+    display: grid; place-items: center; font-weight: 700; transition: background .25s ease, color .25s ease, transform .25s ease;
+  }
+  .card:hover .num { transform: rotate(-4deg) scale(1.05); }
+  .card.open .num { background: var(--green); color: #fff; }
+  .t { flex: 1; min-width: 0; }
+  .t strong { display: block; font-size: 1.02rem; }
+  .t small { display: block; font-weight: 400; color: var(--muted); font-size: 0.88rem; }
+  .chev { flex: none; width: 22px; height: 22px; color: var(--green); transition: transform .3s ease; }
+  .card.open .chev { transform: rotate(180deg); }
+
+  .panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+  .card.open .panel { grid-template-rows: 1fr; }
+  .panel-inner { overflow: hidden; min-height: 0; visibility: hidden; transition: visibility 0s .35s; }
+  .card.open .panel-inner { visibility: visible; transition-delay: 0s; }
+  .panel-body { padding: 0 18px 18px; }
+  .panel-body p { margin: 0 0 12px; }
+  .panel-body p:last-child { margin-bottom: 0; }
+  .fun {
+    background: var(--tint); border-left: 4px solid var(--lime); border-radius: 8px; padding: 10px 12px; font-size: 0.95rem;
+  }
+
+  /* Mini-QR in Karte 1 */
+  .demo {
+    display: block; width: 190px; max-width: 60%; margin: 14px auto 10px; background: #fff;
+    border: 2px solid var(--lime-soft); border-radius: 10px; padding: 8px; shape-rendering: crispEdges;
+  }
+  .demo rect { transition: opacity .25s ease; }
+  .m-finder { fill: var(--lime); }
+  .m-timing { fill: var(--amber); }
+  .m-data { fill: var(--green); }
+  .demo[data-focus="finder"] rect:not(.m-finder),
+  .demo[data-focus="timing"] rect:not(.m-timing),
+  .demo[data-focus="data"] rect:not(.m-data) { opacity: .12; }
+  .legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 10px; }
+  .chip, .chip:hover {
+    display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--ink);
+    border: 2px solid var(--lime-soft); border-radius: 999px; padding: 5px 12px; font-size: 0.88rem; font-weight: 600;
+  }
+  .chip:hover { border-color: var(--lime); }
+  .chip[aria-pressed="true"] { border-color: var(--green); background: #eef7d6; }
+  .dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  .dot.finder { background: var(--lime); }
+  .dot.timing { background: var(--amber); }
+  .dot.data { background: var(--green); }
+  .caption { min-height: 4.6em; text-align: center; color: var(--muted); font-size: 0.95rem; }
+
+  /* Schritte in Karte 2 */
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+  .steps li { position: relative; padding: 0 0 14px 46px; counter-increment: s; }
+  .steps li:last-child { padding-bottom: 0; }
+  .steps li::before {
+    content: counter(s); position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%;
+    background: var(--green); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 0.92rem;
+  }
+  .steps li::after {
+    content: ""; position: absolute; left: 15px; top: 36px; bottom: 4px; width: 2px; background: var(--lime); opacity: .6;
+  }
+  .steps li:last-child::after { display: none; }
+
+  /* Kacheln in Karte 3 */
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+  .tile {
+    background: #fff; border: 2px solid var(--lime-soft); border-radius: 12px; padding: 12px 12px 12px 14px;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .tile:hover { border-color: var(--lime); transform: translateY(-2px); }
+  .tile b { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .tile b::before {
+    content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex: none;
+    box-shadow: 0 0 0 4px rgba(152, 199, 57, .35);
+  }
+  .tile span { font-size: 0.92rem; color: var(--muted); display: block; }
+
+  @media (max-width: 480px) {
     .row { flex-direction: column; }
     h1 { font-size: 1.4rem; }
+    .tiles { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
   }
 </style>
 </head>
@@ -86,19 +189,98 @@
     <h1>QR-Code erstellen</h1>
   </header>
 
+  <p class="intro">Kopiere den Link aus deinem <a href="https://drive.google.com/drive/folders/1Wj8t_IC7FecHoW1hJT21c1OxLDxX2dey" target="_blank" rel="noopener noreferrer">Google Drive</a>, füge ihn unten ein, klicke auf „Erstellen“ und lade den QR-Code herunter.</p>
+  <ol class="quick" aria-label="So geht es">
+    <li><b>1</b>Link kopieren</li>
+    <li><b>2</b>Einfügen und erstellen</li>
+    <li><b>3</b>Herunterladen</li>
+  </ol>
+
   <form id="form" novalidate>
     <label for="link">Link</label>
     <div class="row">
       <input id="link" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="https://..." aria-describedby="error">
       <button type="submit">Erstellen</button>
     </div>
-    <p class="hint">Der Link bleibt auf deinem Gerät, es wird nichts hochgeladen.</p>
+    <p class="hint">Dein Link bleibt auf deinem Gerät, es wird nichts hochgeladen.</p>
     <p id="error" class="error" role="alert"></p>
   </form>
 
   <section id="result" hidden aria-label="Dein QR-Code">
     <canvas id="qr" role="img" aria-label="QR-Code"></canvas>
     <button id="save" type="button" class="secondary">Als PNG speichern</button>
+  </section>
+
+  <section class="wissen" aria-labelledby="wissen-titel">
+    <h2 id="wissen-titel">Gut zu wissen</h2>
+    <p class="sub">Klicke auf eine Karte und lies nach.</p>
+
+    <!-- Karte 1 -->
+    <div class="card">
+      <button class="card-head" type="button" id="h1" aria-expanded="false" aria-controls="p1">
+        <span class="num">01</span>
+        <span class="t"><strong>Wie funktioniert ein QR-Code?</strong><small>Ein Raster, das deine Kamera wie Schrift liest</small></span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="panel" id="p1" role="region" aria-labelledby="h1">
+        <div class="panel-inner"><div class="panel-body">
+          <p>Ein QR-Code ist ein Raster aus dunklen und hellen Feldern. Jedes Feld steht für eine 1 oder eine 0, zusammen ergeben sie deinen Text, in diesem Fall den Link.</p>
+          <svg id="demo" class="demo" role="img" aria-label="Kleiner Beispiel-QR-Code mit farbig markierten Bereichen"></svg>
+          <div class="legend" id="legend">
+            <button type="button" class="chip" data-group="finder" aria-pressed="false"><span class="dot finder"></span>Eckquadrate</button>
+            <button type="button" class="chip" data-group="timing" aria-pressed="false"><span class="dot timing"></span>Streifen</button>
+            <button type="button" class="chip" data-group="data" aria-pressed="false"><span class="dot data"></span>Daten</button>
+          </div>
+          <p class="caption" id="caption" aria-live="polite">Tippe auf eine Gruppe, um sie im Beispiel hervorzuheben.</p>
+          <p>Dein Handy liest das Muster, wandelt es zurück in Text und öffnet den Link. Zum Lesen braucht es kein Internet, nur zum Öffnen der Seite danach.</p>
+          <p class="fun">Erfunden wurde der QR-Code 1994 von der japanischen Firma Denso Wave, um Autoteile in Fabriken schneller zu erfassen. „QR“ steht für „Quick Response“, auf Deutsch schnelle Antwort.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- Karte 2 -->
+    <div class="card">
+      <button class="card-head" type="button" id="h2" aria-expanded="false" aria-controls="p2">
+        <span class="num">02</span>
+        <span class="t"><strong>Wie wird ein QR-Code erstellt?</strong><small>Sechs Schritte vom Link zum Muster</small></span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="panel" id="p2" role="region" aria-labelledby="h2">
+        <div class="panel-inner"><div class="panel-body">
+          <p>Diese Seite macht genau diese Schritte, direkt in deinem Browser:</p>
+          <ol class="steps">
+            <li><strong>Text in Zahlen umwandeln.</strong> Jedes Zeichen deines Links wird zu einem Byte.</li>
+            <li><strong>Größe wählen.</strong> Es gibt 40 Größen, von 21 × 21 Feldern bis 177 × 177. Je länger der Link, desto größer der Code. Die Seite nimmt die kleinste, in die der Link passt.</li>
+            <li><strong>Sicherheitszahlen berechnen.</strong> Aus den Daten entsteht mit einem mathematischen Verfahren (Reed-Solomon) eine Menge Extra-Bytes. Mit ihnen lassen sich verlorene Teile später rekonstruieren.</li>
+            <li><strong>Felder setzen.</strong> Zuerst kommen Eckquadrate, Streifen und Ausrichtungsquadrate, danach werden die Daten in einer Zickzack-Bahn eingetragen.</li>
+            <li><strong>Maske wählen.</strong> Acht Muster stehen zur Auswahl, mit denen die Felder gezielt gekippt werden. Die Seite probiert alle durch und nimmt die, bei der keine großen einfarbigen Flächen oder verwirrende Muster entstehen.</li>
+            <li><strong>Zeichnen.</strong> Zum Schluss kommen Farben, weißer Rand und das Logo in die Mitte.</li>
+          </ol>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- Karte 3 -->
+    <div class="card">
+      <button class="card-head" type="button" id="h3" aria-expanded="false" aria-controls="p3">
+        <span class="num">03</span>
+        <span class="t"><strong>Wie funktioniert diese Seite?</strong><small>Eigener Code, komplett in deinem Browser</small></span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="panel" id="p3" role="region" aria-labelledby="h3">
+        <div class="panel-inner"><div class="panel-body">
+          <p>Für diese Seite wurde extra ein eigener Algorithmus geschrieben. Er steckt in der Datei <code>qr.js</code>, die beim Öffnen der Seite geladen wird. Die Seite selbst liegt auf GitHub, ganz ohne eigenen Server.</p>
+          <div class="tiles">
+            <div class="tile"><b>Eigener Algorithmus</b><span>Keine fremde Bibliothek, keine Lizenzhinweise.</span></div>
+            <div class="tile"><b>Logo und Farben</b><span>Beides ist schon eingebaut, du musst nichts einstellen.</span></div>
+            <div class="tile"><b>Datenschutzfreundlich</b><span>Alles läuft in deinem Browser. Dein Link wird nirgends hingeschickt, gespeichert oder ausgewertet.</span></div>
+            <div class="tile"><b>Keine externen Dienste</b><span>Keine Tracker, Cookies, Schriften oder Skripte von Dritten.</span></div>
+          </div>
+          <p>Das Logo darf in der Mitte sitzen, weil der Code die höchste Fehlerkorrektur (Stufe H) nutzt: Bis zu etwa 30 % dürfen verdeckt oder beschädigt sein.</p>
+          <p class="fun">GitHub liefert nur die Dateien dieser Seite aus, deine Eingaben erreichen GitHub nie. Der fertige Code ist fest: Willst du später auf ein anderes Ziel verweisen, erstelle einfach einen neuen.</p>
+        </div></div>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -182,6 +364,70 @@
       setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
     }, "image/png");
   });
+
+  // ---------- Karten: immer nur eine offen ----------
+  var cards = document.querySelectorAll(".card");
+  Array.prototype.forEach.call(cards, function (card) {
+    var head = card.querySelector(".card-head");
+    head.addEventListener("click", function () {
+      var wasOpen = card.classList.contains("open");
+      Array.prototype.forEach.call(cards, function (c) {
+        c.classList.remove("open");
+        c.querySelector(".card-head").setAttribute("aria-expanded", "false");
+      });
+      if (!wasOpen) {
+        card.classList.add("open");
+        head.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+
+  // ---------- Mini-QR in Karte 1, mit dem eigenen Encoder gezeichnet ----------
+  var CAPTIONS = {
+    finder: "Die drei großen Eckquadrate zeigen der Kamera, wo oben ist und wie der Code gedreht ist. Deshalb lässt er sich aus jedem Winkel scannen.",
+    timing: "Die abwechselnden Streifen geben das Raster vor. Größere Codes haben zusätzlich kleine Ausrichtungsquadrate, damit auch schief gehaltene Codes erkannt werden.",
+    data: "Alles andere sind deine Daten plus ein Sicherheitspolster, mit dem der Code Fehler ausgleichen kann."
+  };
+  var DEFAULT_CAPTION = "Tippe auf eine Gruppe, um sie im Beispiel hervorzuheben.";
+
+  (function buildDemo() {
+    var svg = document.getElementById("demo");
+    var caption = document.getElementById("caption");
+    var chips = document.querySelectorAll("#legend .chip");
+    var qr;
+    try { qr = QR.encode("QR", { minVersion: 1 }); } catch (e) { return; }
+    var n = qr.size, NS = "http://www.w3.org/2000/svg";
+    svg.setAttribute("viewBox", "0 0 " + n + " " + n);
+    for (var y = 0; y < n; y++) {
+      for (var x = 0; x < n; x++) {
+        if (!qr.modules[y][x]) continue;
+        var finder = (x < 7 && y < 7) || (x >= n - 7 && y < 7) || (x < 7 && y >= n - 7);
+        var timing = !finder && ((y === 6 && x >= 8 && x <= n - 9) || (x === 6 && y >= 8 && y <= n - 9));
+        var r = document.createElementNS(NS, "rect");
+        r.setAttribute("x", x);
+        r.setAttribute("y", y);
+        r.setAttribute("width", 1);
+        r.setAttribute("height", 1);
+        r.setAttribute("class", finder ? "m-finder" : timing ? "m-timing" : "m-data");
+        svg.appendChild(r);
+      }
+    }
+    Array.prototype.forEach.call(chips, function (chip) {
+      chip.addEventListener("click", function () {
+        var group = chip.getAttribute("data-group");
+        var same = svg.getAttribute("data-focus") === group;
+        Array.prototype.forEach.call(chips, function (c) { c.setAttribute("aria-pressed", "false"); });
+        if (same) {
+          svg.removeAttribute("data-focus");
+          caption.textContent = DEFAULT_CAPTION;
+        } else {
+          svg.setAttribute("data-focus", group);
+          chip.setAttribute("aria-pressed", "true");
+          caption.textContent = CAPTIONS[group];
+        }
+      });
+    });
+  })();
 })();
 </script>
 </body>
